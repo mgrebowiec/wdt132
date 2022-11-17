@@ -1,6 +1,5 @@
 package pl.sda.mg.wdt.testowanie.ownassertion;
 
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
@@ -9,10 +8,9 @@ import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static pl.sda.mg.wdt.testowanie.ownassertion.PersonAssert.assertThatPerson;
+import static org.assertj.core.api.Assertions.assertThat;
 
-class PersonFactoryTest {
+class PersonFactoryAssertJTest {
 
     private static PersonFactory personFactory;
 
@@ -36,10 +34,16 @@ class PersonFactoryTest {
         final Person actualPerson = personFactory.buildPerson(name, pesel);
 
         // then
-        assertThatPerson(actualPerson)
-                .isValid()
-                .hasAge(21)
-                .hasName("Michal");
+//        assertThatPerson(actualPerson)
+//                .isValid()
+//                .hasAge(21)
+//                .hasName("Michal");
+
+        assertThat(actualPerson)
+                .isNotNull()
+                .hasFieldOrPropertyWithValue("name", "Michal")
+                .hasFieldOrPropertyWithValue("age", 21)
+                .hasFieldOrProperty("pesel");
     }
 
     @Test
@@ -52,8 +56,11 @@ class PersonFactoryTest {
         final Person actualPerson = personFactory.buildPerson(name, pesel);
 
         // then
-        assertThatPerson(actualPerson)
-                .notExist();
+//        assertThatPerson(actualPerson)
+//                .notExist();
+
+        assertThat(actualPerson)
+                .isNull();
     }
 
     @Test
@@ -66,8 +73,11 @@ class PersonFactoryTest {
         final Person actualPerson = personFactory.buildPerson(name, pesel);
 
         // then
-        assertThatPerson(actualPerson)
-                .notExist();
+//        assertThatPerson(actualPerson)
+//                .notExist();
+
+        assertThat(actualPerson)
+                .isNull();
     }
 
     @Test
@@ -80,8 +90,11 @@ class PersonFactoryTest {
         final Person actualPerson = personFactory.buildPerson(name, pesel);
 
         // then
-        assertThatPerson(actualPerson)
-                .notExist();
+//        assertThatPerson(actualPerson)
+//                .notExist();
+
+        assertThat(actualPerson)
+                .isNull();
     }
 
     @Test
@@ -90,7 +103,7 @@ class PersonFactoryTest {
         final Person person = new Person("Michal", 19, "03220211111");
 
         // then
-        Assertions.assertThat(person.getName())
+        assertThat(person.getName())
                 .startsWith("M")
                 .endsWith("l")
                 .contains("c");
